@@ -202,15 +202,67 @@
     function openDrawer(){drawer.classList.add('open');drawer.setAttribute('aria-hidden','false')}
     function closeDrawer(){drawer.classList.remove('open');drawer.setAttribute('aria-hidden','true')}
 
-    checkoutBtn.addEventListener('click',()=>{
-      const {total} = calc();
-      if(cart.length===0){alert('Votre panier est vide.');return}
-      // simple simulated checkout
-      const name = prompt('Nom pour la commande (simulation) :','Jean Dupont');
-      if(!name) return;
-      alert(`Merci ${name} — votre commande de ${cart.reduce((s,i)=>s + i.qty,0)} article(s) a été enregistrée. Total: ${fmt(total)}`);
-      cart = []; save(); closeDrawer();
-    })
+     checkoutBtn.addEventListener('click',()=>{
+  const {total} = calc();
+  if(cart.length===0){alert('Votre panier est vide.');return}
+  // simple simulated checkout
+  const name = prompt('Nom pour la commande (simulation) :','Jean Dupont');
+  if(!name) return;
+  afficherConfirmationAchat(name, fmt(total), cart.reduce((s,i)=>s + i.qty,0));
+  cart = []; save(); closeDrawer();
+})
+// Fonction pour afficher le message de remerciement avec une image
+function afficherConfirmationAchat(name, total, nArticles) {
+  const modal = document.createElement('div');
+  modal.style.position = 'fixed';
+  modal.style.top = 0;
+  modal.style.left = 0;
+  modal.style.width = '100vw';
+  modal.style.height = '100vh';
+  modal.style.background = 'rgba(0,0,0,0.6)';
+  modal.style.display = 'flex';
+  modal.style.justifyContent = 'center';
+  modal.style.alignItems = 'center';
+  modal.style.zIndex = 1000;
+
+  const box = document.createElement('div');
+  box.style.background = '#fff';
+  box.style.borderRadius = '8px';
+  box.style.padding = '30px';
+  box.style.maxWidth = '400px';
+  box.style.textAlign = 'center';
+  box.style.boxShadow = '0 2px 16px rgba(0,0,0,0.25)';
+
+  const img = document.createElement('img');
+  img = 'https://media.tenor.com/5GZHJQZuNZMAAAAM/thumbs-up.gif'; // Modifie si tu veux une autre image
+  img.alt = 'Merci pour votre achat';
+  img.style.width = '120px';
+  img.style.marginBottom = '20px';
+
+  const msg = document.createElement('h2');
+  msg.innerText = `Merci pour votre achat, ${name} !`;
+
+  const details = document.createElement('p');
+  details.innerText = `Commande enregistrée : ${nArticles} article(s)\nTotal: ${total}`;
+
+  const btn = document.createElement('button');
+  btn.innerText = 'Fermer';
+  btn.style.marginTop = '15px';
+  btn.style.padding = '8px 22px';
+  btn.style.borderRadius = '4px';
+  btn.style.border = 'none';
+  btn.style.background = '#0072ff';
+  btn.style.color = '#fff';
+  btn.style.cursor = 'pointer';
+  btn.onclick = () => document.body.removeChild(modal);
+
+  box.appendChild(img);
+  box.appendChild(msg);
+  box.appendChild(details);
+  box.appendChild(btn);
+  modal.appendChild(box);
+  document.body.appendChild(modal);
+}
 
     // search filter
     let searchTimeout;
