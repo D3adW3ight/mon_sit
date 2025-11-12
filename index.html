@@ -234,7 +234,7 @@ function afficherConfirmationAchat(name, total, nArticles) {
   box.style.boxShadow = '0 2px 16px rgba(0,0,0,0.25)';
 
   const img = document.createElement('img');
-  img.src = 'thumbs-up.gif'; 
+  img.src = 'https://media.tenor.com/5GZHJQZuNZMAAAAM/thumbs-up.gif'; // Modifie si tu veux une autre image
   img.alt = 'Merci pour votre achat';
   img.style.width = '120px';
   img.style.marginBottom = '20px';
@@ -263,6 +263,7 @@ function afficherConfirmationAchat(name, total, nArticles) {
   modal.appendChild(box);
   document.body.appendChild(modal);
 }
+
 
     // search filter
     let searchTimeout;
